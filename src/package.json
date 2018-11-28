@@ -1,0 +1,34 @@
+{
+  "name": "discord-os-presence",
+  "version": "1.0.0",
+  "description": "Rich presence for your OS, because your life needs more rich presence!",
+  "main": "index.js",
+  "scripts": {
+    "test": "standard",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Adybo123/Discord-OS-Presence.git"
+  },
+  "keywords": [
+    "discord",
+    "windows",
+    "macos",
+    "linux"
+  ],
+  "author": "Adam Soutar",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Adybo123/Discord-OS-Presence/issues"
+  },
+  "homepage": "https://github.com/Adybo123/Discord-OS-Presence#readme",
+  "devDependencies": {
+    "standard": "^12.0.1"
+  },
+  "dependencies": {
+    "discord-rich-presence": "0.0.7",
+    "discord-rpc": "^3.0.1",
+    "node-process-windows": "Adybo123/node-process-windows"
+  }
+}
