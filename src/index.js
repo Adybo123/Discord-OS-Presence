@@ -63,7 +63,7 @@ function processToRichPresence () {
       // Push to Discord
       discord.updatePresence({
         state: windowTitle,
-        details: `Using ${processName}`,
+        details: `Using ${processName} on ${osNiceNames[os]}`,
         startTimestamp: nowStamp,
         largeImageKey: osKeys[os],
         largeImageText: osNiceNames[os]
