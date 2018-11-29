@@ -9,13 +9,27 @@ const clientId = '517427338284236831'
 const checkDelay = 10000
 const discord = require('discord-rich-presence')(clientId)
 const processWindows = require('node-process-windows')
+
+console.log(`Connected. Watching windows every ${checkDelay / 1000}s`)
+
 var lastCheck = {
   'processName': undefined,
   'windowTitle': undefined,
   'timestamp': 0
 }
 
-console.log('Connected')
+// Used for 'largeImageKey' in Discord payload
+var osNiceNames = ['Windows', 'macOS', 'Linux', 'Unknown']
+var osKeys = ['win32', 'darwin', 'linux', 'unknown']
+var os = osKeys.indexOf(process.platform)
+
+if (os === -1) {
+  // Unsupported OS
+  console.log("You're running an unsupported os. Window recognition might not work.")
+  os = 3
+}
+
+console.log(`Platform: ${osKeys[os]} OS: ${osNiceNames[os]}`)
 
 function processToRichPresence () {
   processWindows.getActiveWindow((error, processInfo) => {
@@ -51,8 +65,8 @@ function processToRichPresence () {
         state: windowTitle,
         details: `Using ${processName}`,
         startTimestamp: nowStamp,
-        largeImageKey: 'windows',
-        largeImageText: 'Windows'
+        largeImageKey: osKeys[os],
+        largeImageText: osNiceNames[os]
       })
     }
   })
