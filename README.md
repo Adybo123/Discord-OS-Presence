@@ -7,7 +7,7 @@
 
 ## To Run
 
-Clone the repo, and run ```npm start``` in the ```src/``` directory. Only runs on Windows.
+Clone the repo, and run ```npm i``` then ```npm start``` in the ```src/``` directory. Only runs on Windows.
 
 ## About
 
