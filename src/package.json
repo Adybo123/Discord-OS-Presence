@@ -29,6 +29,6 @@
   "dependencies": {
     "discord-rich-presence": "0.0.7",
     "discord-rpc": "^3.0.1",
-    "node-process-windows": "Adybo123/node-process-windows"
+    "node-process-windows": "github:Adybo123/node-process-windows"
   }
 }

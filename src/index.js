@@ -22,6 +22,9 @@ var lastCheck = {
 var osNiceNames = ['Windows', 'macOS', 'Linux', 'Unknown']
 var osKeys = ['win32', 'darwin', 'linux', 'unknown']
 var os = osKeys.indexOf(process.platform)
+// largeImageKey bodge for now
+osKeys[0] = 'windows'
+var finders = ['Windows Explorer', 'Finder', 'File Browser', 'File Browser']
 
 if (os === -1) {
   // Unsupported OS
@@ -38,20 +41,23 @@ function processToRichPresence () {
       console.log(error)
       return
     }
+    console.log(processInfo)
 
     // Windows Explorer counts as null (maybe other programs too)
     let isExp = (processInfo === null)
-    let processName = (isExp) ? 'Windows Explorer' : processInfo.ProcessName
+    let processName = (isExp) ? finders[os] : processInfo.ProcessName
     let windowTitle = (isExp) ? 'Browsing...' : processInfo.MainWindowTitle
     let nowStamp = Date.now()
 
     // Make sure it's a different app, and that it's been 15s
     // Discord rejects a Rich Presence change within 15s
-    if (
+    var isGood = (
       (lastCheck.processName !== processName ||
       lastCheck.windowTitle !== windowTitle) &&
       nowStamp - lastCheck.timestamp > 15000
-    ) {
+    )
+    console.log(`Are we sending an update? ${isGood ? 'Yes' : 'No'}`)
+    if (isGood) {
       // New program data!
       lastCheck = {
         'processName': processName,
@@ -60,10 +66,16 @@ function processToRichPresence () {
       }
       console.log(`Switched to ${processName}, updating Discord`)
 
+      var details = `Using ${processName} on ${osNiceNames[os]}`
+      // We can't fetch processName on macOS yet.
+      if (osNiceNames[os] === 'macOS') {
+        details = 'macOS'
+      }
+
       // Push to Discord
       discord.updatePresence({
         state: windowTitle,
-        details: `Using ${processName} on ${osNiceNames[os]}`,
+        details: details,
         startTimestamp: nowStamp,
         largeImageKey: osKeys[os],
         largeImageText: osNiceNames[os]
